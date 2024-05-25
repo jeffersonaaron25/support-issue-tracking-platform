@@ -2,6 +2,9 @@
 
 This project is a code challenge for Mentium. It's a Support Issue Tracking Platform, where when users send emails to a support email address, the incoming email is fetched and linked to a new ticket or creates a thread in an existing ticket if ticket exists. The user can update the status of a ticket, assign it to a user, and change the priority of the ticket.
 
+<img width="1423" alt="Screenshot 2024-05-24 at 8 50 40 PM" src="https://github.com/jeffersonaaron25/support-issue-tracking-platform/assets/53298971/860436ff-aae4-4386-9aaa-0800335ccdb8">
+
+
 ## Project Structure
 
 The project is divided into two main parts: the API and the frontend.
@@ -24,6 +27,8 @@ Temporal for Workflow Scheduling
 This project was done on my graduation week in less than 30 hours to make it to my family vacation!
 This means I had to make some compromises on enhancements and wanted to ensure the app is functional as
 per the challenge guidelines!
+
+<img width="615" alt="Screenshot 2024-05-24 at 9 24 41 PM" src="https://github.com/jeffersonaaron25/support-issue-tracking-platform/assets/53298971/0603bec4-6292-4cb4-8efb-5d100e4508d1">
 
 ## Functionalities
 
