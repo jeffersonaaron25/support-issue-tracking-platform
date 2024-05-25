@@ -14,12 +14,12 @@ The project is divided into two main parts: the API and the frontend.
 
 ## Tech Stack
 
-Python
-FastAPI
-React
-TypeScript
-Docker
-Nylas API for Emails
+Python,
+FastAPI,
+React,
+TypeScript,
+Docker,
+Nylas API for Emails,
 Temporal for Workflow Scheduling
 
 ## Dev's Note
