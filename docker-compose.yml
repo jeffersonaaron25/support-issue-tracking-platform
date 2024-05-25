@@ -1,0 +1,73 @@
+version: "3"
+
+services:
+  postgres:
+    image: matthieuberger/postgres-multi-db:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./tmp/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_MULTIPLE_DATABASES=platform
+
+  temporal:
+    restart: on-failure:3
+    build:
+      context: ./temporal
+      dockerfile: Dockerfile
+    ports:
+      - 7233:7233
+      - 8233:8233
+    volumes:
+      - ./tmp/temporal:/usr/temporal/
+
+  api:
+    build: ./apis
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apis:/app
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NYLAS_CLIENT_ID=${NYLAS_CLIENT_ID}
+      - NYLAS_API_KEY=${NYLAS_API_KEY}
+      - NYLAS_API_URI=${NYLAS_API_URI}
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    depends_on:
+      - postgres
+      - temporal
+
+  start-workflow:
+    build: ./apis
+    volumes:
+      - ./apis:/app
+    command: python start_workflow.py
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NYLAS_CLIENT_ID=${NYLAS_CLIENT_ID}
+      - NYLAS_API_KEY=${NYLAS_API_KEY}
+      - NYLAS_API_URI=${NYLAS_API_URI}
+    depends_on:
+      - api
+      - postgres
+  
+  email-workflow:
+    build: ./apis
+    volumes:
+      - ./apis:/app
+    command: python -u workflows.py
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NYLAS_CLIENT_ID=${NYLAS_CLIENT_ID}
+      - NYLAS_API_KEY=${NYLAS_API_KEY}
+      - NYLAS_API_URI=${NYLAS_API_URI}
+    depends_on:
+      - start-workflow
+      - api
+
+networks:
+  default:
+    driver: bridge
+    name: mentium-net

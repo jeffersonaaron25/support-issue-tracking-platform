@@ -1,0 +1,7 @@
+fastapi
+psycopg2
+nylas
+temporalio
+bs4
+email_reply_parser
+langchain_openai
