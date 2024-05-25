@@ -1,76 +1,54 @@
-Sure, here's the updated code challenge in Markdown format:
-# Code Challenge: Ticket Support Platform
+# Mentium Code Challenge: Support Issue Tracking Platform
 
-## Objective
-Design a ticket support platform similar to Zendesk. Users will send emails to a support email address. Each incoming email will be linked to an existing ticket if it belongs to a thread, or it will create a new ticket if it starts a new thread. The user should be able to update the status of a ticket, assign it to a user, and change the priority of the ticket. 
+This project is a code challenge for Mentium. It's a Support Issue Tracking Platform, where when users send emails to a support email address, the incoming email is fetched and linked to a new ticket or creates a thread in an existing ticket if ticket exists. The user can update the status of a ticket, assign it to a user, and change the priority of the ticket.
 
-## Tasks
+## Project Structure
 
-You are free to choose either Go or Python for the API and any ORM of your choice. If you choose python we recommend FastAPI if you've work with it before.
+The project is divided into two main parts: the API and the frontend.
 
-### Task 1 - Project Setup
-1. **API Development:**
-   - Develop an API that supports the following functionalities:
-     - List all new tickets (Add filters to mask done tickets).
-     - Update a ticket (status, assignee, priority).
-     - List messages for a given ticket.
-     - Connect a user's email inbox using Nylas.
-     - Add a dockerfile and bring it in the docker compose file.
-2. **Frontend Development:**
-   - Develop a React web app that displays tickets.
-   - When a ticket is clicked, display the corresponding thread.
-   - The user should be able to update ticket statuses, assignee etc.
+- `apis/`: This directory contains the API developed in Python using FastAPI. It includes various modules like `email_parser.py`, `llm.py`, `main.py`, `models.py`, `session.py`, `start_workflow.py`, `utils.py`, and `workflows.py`.
+- `webapp/`: This directory contains the frontend developed in React/TypeScript. It includes various components like `Auth.tsx`, `Messages.tsx`, `TicketModal.tsx`, `Tickets.tsx`, and `theme.tsx`.
 
-### Task 2 - Email Collection
-1. **Workflow Scheduling:**
-   - Use the Temporal SDK (Go/Python) to schedule a recurring workflow.
-   - This workflow should fetch new messages or threads and ingest them into the system.
-  
-2. **Error Handling:**
-   - Ensure no emails are lost.
-   - Demonstrate handling of workflow failures and idempotency with emails.
+## Tech Stack
 
-### Task 3 -  Email Response
-1. **API Endpoint:**
-   - Add an API endpoint to enable users to respond to emails in a thread directly from the React app.
+Python
+FastAPI
+React
+TypeScript
+Docker
+Nylas API for Emails
+Temporal for Workflow Scheduling
 
-### Task 4 [BONUS] - Gring your imagination
-   - What would you add to this app ? Show off your experience with LLMs or really anything that you can think of. It could also be some devops skills, CICD etc.
+## Dev's Note
 
-## Allowed Tools
-- You are allowed to use any coding copilot or code generation tool.
-- We recommend to use ChatGTP to generate mock messages and thread. 
-- We recommend [Orval](https://orval.dev/) to generate React hooks for API calls.
+This project was done on my graduation week in less than 30 hours to make it to my family vacation!
+This means I had to make some compromises on enhancements and wanted to ensure the app is functional as
+per the challenge guidelines!
 
-## Provided Resources
-- A Docker Compose file with:
-  - A Postgres DB
-  - Temporal server + UI
-- A Nylas API key (DO NOT add commit this API Key, use )
-- A working React setup with:
-  - React
-  - Material-UI (MUI)
-  - React Query (Feel free to use a different setup)
+## Functionalities
 
-## Time Allocation
-- **Total Time:** 6 hours
+The API supports the following functionalities:
 
-## Usefull commands
-- Start docker-compose: `docker-compose up`
-- Start the web app: `cd webapp && yarn dev` 
+- List all tickets or active tickets
+- Update a ticket (status, assignee, priority)
+- List messages for a given ticket
+- Send messages through email response
+- Connect a user's email inbox using Nylas
+- Uses LLM to create ticket from Email
 
-## Doc
-- https://developer.nylas.com/docs/v3/quickstart/
-- https://docs.temporal.io/
+The frontend displays tickets and when a ticket is clicked, it displays the corresponding thread. The user can update ticket statuses, assignee, etc. Additionally, there is also a trend chart to visualize the active tickets over a day.
 
-## Evaluation Criteria
-- **Code Quality:** Clear, maintainable, and well-documented code.
-- **Functionality:** Proper implementation of the required features.
-- **Error Handling:** Robustness in handling edge cases and failures.
-- **Testing:** We don;t expect you to fully bullet proof your app but show us some testing skills
+## Setup and Initialization
 
-## Submission Instructions
-- **Repository:** Create a public GitHub repository for your project.
-- **README:** Include a README file with setup instructions, explanations, and any assumptions made.
-  
-Good luck!
+To set up and run the project, follow these steps:
+
+1. Clone the repository to your local machine.
+2. Navigate to the `apis/` directory. Ensure .env file with your environment variables exist in the directory.
+3. Start the Docker Compose with the command `docker-compose up -d`.
+4. Ensure all the services are running. Occasionally, restarting might be required.
+5. Navigate to the `webapp/` directory and install the required packages using the command `yarn`.
+6. Start the web app with the command `yarn run dev`.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
